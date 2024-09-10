@@ -1,3 +1,3 @@
 module.exports = {
-  channel: 'message-from-renderer'
+  channel: 'message-from-renderer',
 };

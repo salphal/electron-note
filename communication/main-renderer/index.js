@@ -1,4 +1,4 @@
-const {app, BrowserWindow, ipcMain} = require('electron/main');
+const { app, BrowserWindow, ipcMain } = require('electron/main');
 require('./src/main-process');
 
 const createWindow = () => {
@@ -11,19 +11,16 @@ const createWindow = () => {
       webviewTag: true, // 允许使用 <webview> 标签
     },
   });
-  win.loadFile("./public/index.html");
+  win.loadFile('./public/index.html');
   // 开启控制台
-  win.webContents.openDevTools()
+  win.webContents.openDevTools();
 };
 
-
 app.whenReady().then(() => {
-  createWindow()
+  createWindow();
 
   // 兼容 mac
   app.on('activate', function () {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
-  })
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
 });
-
-

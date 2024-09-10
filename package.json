@@ -4,12 +4,14 @@
   "description": "electron study notes",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "prettier . --write --check --fix"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^32.0.2"
+    "electron": "^32.0.2",
+    "prettier": "^3.3.3"
   }
 }

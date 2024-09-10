@@ -1,30 +1,25 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Title</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Title</title>
+  </head>
+  <body>
+    <p>主进程和渲染进程通信</p>
+    <button id="btn">请求数据</button>
 
+    <script type="text/javascript">
+      const { ipcRenderer } = require('electron');
+      console.log('=>(index.html:17) ipcRenderer', ipcRenderer);
+      const btn = document.getElementById('btn');
 
-<p>主进程和渲染进程通信</p>
-<button id="btn">请求数据</button>
+      btn.addEventListener('click', () => {
+        // 渲染进程发送消息
+        ipcRenderer.send('message-from-renderer', 'hello');
+      });
 
-<script type="text/javascript">
-
-  const {ipcRenderer} = require("electron");
-  console.log('=>(index.html:17) ipcRenderer', ipcRenderer);
-  const btn = document.getElementById("btn");
-
-  btn.addEventListener('click', () => {
-    // 渲染进程发送消息
-    ipcRenderer.send("message-from-renderer", "hello");
-  });
-
-  require("../src/renderer-process");
-
-</script>
-
-</body>
+      require('../src/renderer-process');
+    </script>
+  </body>
 </html>
