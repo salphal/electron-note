@@ -11,7 +11,8 @@
 
     <script type="text/javascript">
       const { ipcRenderer } = require('electron');
-      console.log('=>(index.html:17) ipcRenderer', ipcRenderer);
+      require('../src/renderer-process');
+
       const btn = document.getElementById('btn');
 
       btn.addEventListener('click', () => {
@@ -19,7 +20,6 @@
         ipcRenderer.send('message-from-renderer', 'hello');
       });
 
-      require('../src/renderer-process');
     </script>
   </body>
 </html>
