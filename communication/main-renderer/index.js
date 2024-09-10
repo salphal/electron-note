@@ -19,8 +19,6 @@ const createWindow = () => {
 
 app.whenReady().then(() => {
   createWindow()
-  require('./src/index');
-
 
   // 兼容 mac
   app.on('activate', function () {
