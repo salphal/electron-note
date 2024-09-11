@@ -1,0 +1,28 @@
+.layout {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+
+.layout .header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.layout .content {
+    padding: 20px 0;
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+}
+
+.layout .footer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}

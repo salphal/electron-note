@@ -1,0 +1,39 @@
+.from {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.from .from-item {
+    margin-bottom: 12px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.from .from-item .label {
+    min-width: 100px;
+}
+
+
+.from .from-item .label:after {
+    content: ":";
+}
+
+.from .from-item .value {
+    padding: 6px;
+    flex: 1;
+}
+
+.from .from-item .value.input {
+
+    height: 24px;
+}
+
+.from .from-item .value.textarea {
+    height: 80px;
+}
