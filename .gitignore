@@ -130,3 +130,6 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+
+.dev-cli/__template__
+__output__
