@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="../../../styles/index.css"/>
+  <title>Window_01</title>
+</head>
+<body>
+
+
+<div class="layout">
+  <div class="header">
+    <p>Window_01</p>
+  </div>
+  <div class="content">
+    <div class="from">
+      <label class="from-item">
+        <span class="label">message</span>
+        <input class="input value" type="text" placeholder="Please enter message to renderer"/>
+      </label>
+      <label class="from-item">
+        <span class="label">reply</span>
+        <textarea class="message value textarea" placeholder="From window_02 renderer" readonly></textarea>
+      </label>
+    </div>
+  </div>
+  <div class="footer">
+    <button class="send">Send</button>
+  </div>
+</div>
+
+
+<script type="application/javascript">
+
+  const {ipcRenderer} = require("electron");
+  const {channel, window1Channel, window2Channel} = require("./constant");
+
+  const btnDom = document.querySelector('.send');
+  const inputDom = document.querySelector('.input');
+  const messageDom = document.querySelector('.message');
+
+  btnDom.addEventListener('click', () => {
+    const message = inputDom.value;
+    console.log('=>(index1.html:26) send message', message);
+    ipcRenderer.send(channel, 'action', message);
+  });
+
+  ipcRenderer.on(window2Channel, (event, message) => {
+    console.log('=>(index1.html:50) reply message', message);
+    messageDom.innerHTML = message;
+  });
+
+</script>
+
+</body>
+</html>

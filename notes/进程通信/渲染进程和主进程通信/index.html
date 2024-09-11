@@ -1,16 +1,35 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Title</title>
-  </head>
-  <body>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>渲染进程和主进程通信</title>
+</head>
+<body>
 
-    <p>Title</p>
-    <button id="btn">Button</button>
+<p>渲染进程和主进程通信</p>
 
-    <script src='./main.js'></script>
+<button id="btn">say hello</button>
 
-  </body>
+
+<script type="application/javascript">
+
+  const {ipcRenderer} = require('electron');
+  const {mainChannel, rendererChannel} = require('./constant');
+
+  console.log('=>(main.js:4) window', window);
+
+  const btn = document.getElementById('btn');
+
+  btn.addEventListener('click', () => {
+    ipcRenderer.send(mainChannel, 'hello');
+  });
+
+  ipcRenderer.on(rendererChannel, (event, message) => {
+    console.log(`=>(main.js:20) ${rendererChannel}`, message);
+  });
+
+</script>
+
+</body>
 </html>
