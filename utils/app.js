@@ -1,9 +1,9 @@
 const { app, BrowserWindow } = require('electron/main');
 const { mixins } = require('./mixins');
 const { ElectronWindow } = require('./electron-window');
-const { Channel } = require('./channel');
+const { EventCenterChannel } = require('./channel/event-center-channel');
 
-class App extends mixins(ElectronWindow, Channel) {
+class App extends mixins(ElectronWindow, EventCenterChannel) {
   app = app;
 
   constructor(props = {}) {

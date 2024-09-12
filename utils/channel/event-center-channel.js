@@ -4,7 +4,7 @@ const { BrowserWindow } = require('electron/main');
 const registerChannel = 'registerChannel';
 const emitChannel = 'emitChannel';
 
-class Channel {
+class EventCenterChannel {
   channelMap = {};
 
   initChannel() {
@@ -82,7 +82,7 @@ class Channel {
    */
   emit(channel, ...args) {
     console.log('=>(channel.js:77) emit', channel, ...args);
-    const webContentsIds = this._getWebContentsByChannel(channel);
+    const webContentsIds = this._getWebContentsIdsByChannel(channel);
     for (let i = 0; i < webContentsIds.length; i++) {
       if (Array.isArray(this.wins) && this.wins.length) {
         for (let j = 0; j < this.wins.length; j++) {
@@ -104,13 +104,13 @@ class Channel {
     return win.webContents.id || null;
   }
 
-  _getWebContentsByChannel(channel) {
+  _getWebContentsIdsByChannel(channel) {
     return this.channelMap[channel] || [];
   }
 }
 
 module.exports = {
-  Channel,
+  EventCenterChannel,
   registerChannel,
   emitChannel,
 };
