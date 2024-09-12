@@ -34,7 +34,7 @@
 <script type="application/javascript">
 
   const {ipcRenderer} = require("electron");
-  const {onChannel, emitChannel} = require('../../../utils/channel/event-center-channel');
+  const {onChannel, emitChannel} = require('../../../utils/channel/channel-center');
   const {formWindow1Action, formWindow2Action} = require('./constant');
 
   const btnDom = document.querySelector('.send');
@@ -52,15 +52,15 @@
     /**
      * 发送消息至 formWindow1Action
      */
-    ipcRenderer.send(emitChannel, formWindow1Action, message);
+    // ipcRenderer.send(emitChannel, formWindow1Action, message);
   });
 
   /**
    * 接收来自 formWindow2Action 的消息
    */
-  ipcRenderer.on(formWindow2Action, (event, message) => {
-    messageDom.innerHTML = message;
-  });
+  // ipcRenderer.on(formWindow2Action, (event, message) => {
+  //   messageDom.innerHTML = message;
+  // });
 
 </script>
 

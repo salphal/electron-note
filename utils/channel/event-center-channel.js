@@ -1,7 +1,7 @@
 const { ipcMain } = require('electron');
 const { BrowserWindow } = require('electron/main');
 
-const registerChannel = 'registerChannel';
+const onChannel = 'onChannel';
 const emitChannel = 'emitChannel';
 
 class EventCenterChannel {
@@ -13,7 +13,7 @@ class EventCenterChannel {
   }
 
   initRegisterChannel() {
-    ipcMain.on(registerChannel, (event, channel) => {
+    ipcMain.on(onChannel, (event, channel) => {
       try {
         const channelId = event.sender.id;
         this.on(channel, channelId);
@@ -111,6 +111,6 @@ class EventCenterChannel {
 
 module.exports = {
   EventCenterChannel,
-  registerChannel,
+  onChannel,
   emitChannel,
 };
