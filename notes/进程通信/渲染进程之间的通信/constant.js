@@ -1,17 +1,8 @@
-const channel = 'channel';
+const formWindow1Action = 'formWindow1Action';
 
-const mainChannel = 'mainChannel';
-
-const window1Channel = 'window-01-channel';
-
-const window2Channel = 'window-02-channel';
-
-const action = 'action';
+const formWindow2Action = 'formWindow2Action';
 
 module.exports = {
-  channel,
-  mainChannel,
-  window1Channel,
-  window2Channel,
-  action,
+  formWindow1Action,
+  formWindow2Action,
 };

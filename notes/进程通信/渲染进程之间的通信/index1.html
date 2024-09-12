@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang='en'>
 <head>
-  <meta charset='UTF-8' />
-  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-  <link rel='stylesheet' href='../../../styles/index.css' />
+  <meta charset='UTF-8'/>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+  <link rel='stylesheet' href='../../../styles/index.css'/>
   <title>Window_01</title>
 </head>
 <body>
@@ -17,7 +17,7 @@
     <div class='from'>
       <label class='from-item'>
         <span class='label'>message</span>
-        <input class='input value' type='text' placeholder='Please enter message to renderer' />
+        <input class='input value' type='text' placeholder='Please enter message to renderer'/>
       </label>
       <label class='from-item'>
         <span class='label'>reply</span>
@@ -33,21 +33,32 @@
 
 <script type='application/javascript'>
 
-  const { ipcRenderer } = require('electron');
-  const { mainChannel, action } = require('./constant');
+  const {ipcRenderer} = require('electron');
+  const {registerChannel, emitChannel} = require('../../../utils/channel');
+  const {formWindow1Action, formWindow2Action} = require('./constant');
 
   const btnDom = document.querySelector('.send');
   const inputDom = document.querySelector('.input');
   const messageDom = document.querySelector('.message');
 
+  /**
+   * 每个渲染进程是独立的, 需要单独的重复注册所需的 action
+   */
+  ipcRenderer.send(registerChannel, formWindow1Action);
+  ipcRenderer.send(registerChannel, formWindow2Action);
+
   btnDom.addEventListener('click', () => {
     const message = inputDom.value;
-    console.log('=>(index1.html:26) send message', message);
-    ipcRenderer.send(mainChannel, action, message);
+    /**
+     * 发送消息至 formWindow2Action
+     */
+    ipcRenderer.send(emitChannel, formWindow2Action, message);
   });
 
-  ipcRenderer.on(action, (event, message) => {
-    console.log('=>(index1.html:50) reply message', message);
+  /**
+   * 接收来自 formWindow1Action 的消息
+   */
+  ipcRenderer.on(formWindow1Action, (event, message) => {
     messageDom.innerHTML = message;
   });
 

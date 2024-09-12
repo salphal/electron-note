@@ -1,12 +1,13 @@
 const { app, BrowserWindow } = require('electron/main');
 const { mixins } = require('./mixins');
 const { ElectronWindow } = require('./electron-window');
+const { Channel } = require('./channel');
 
-class App extends mixins(ElectronWindow) {
+class App extends mixins(ElectronWindow, Channel) {
   app = app;
 
   constructor(props = {}) {
-    super(props);
+    super();
     this.init();
   }
 
@@ -21,10 +22,12 @@ class App extends mixins(ElectronWindow) {
   _ready() {
     this.app.whenReady().then(() => {
       this.initWindows();
+      this.initChannel();
       // 兼容 mac
       app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) {
           this.initWindows();
+          this.initChannel();
         }
       });
     });

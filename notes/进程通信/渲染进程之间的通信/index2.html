@@ -34,24 +34,33 @@
 <script type="application/javascript">
 
   const {ipcRenderer} = require("electron");
-  const {mainChannel, action} = require("./constant");
+  const {registerChannel, emitChannel} = require('../../../utils/channel');
+  const {formWindow1Action, formWindow2Action} = require('./constant');
 
   const btnDom = document.querySelector('.send');
   const inputDom = document.querySelector('.input');
   const messageDom = document.querySelector('.message');
 
+  /**
+   * 每个渲染进程是独立的, 需要单独的重复注册所需的 action
+   */
+  ipcRenderer.send(registerChannel, formWindow1Action);
+  ipcRenderer.send(registerChannel, formWindow2Action);
+
   btnDom.addEventListener('click', () => {
     const message = inputDom.value;
-    console.log('=>(index1.html:26) send message', message);
-    ipcRenderer.send(mainChannel, action, message);
+    /**
+     * 发送消息至 formWindow1Action
+     */
+    ipcRenderer.send(emitChannel, formWindow1Action, message);
   });
 
-  ipcRenderer.on(action, (event, message) => {
-    console.log('=>(index1.html:50) reply message', message);
+  /**
+   * 接收来自 formWindow2Action 的消息
+   */
+  ipcRenderer.on(formWindow2Action, (event, message) => {
     messageDom.innerHTML = message;
   });
-
-  ipcRenderer.send("registerChannelEvent", action);
 
 </script>
 
