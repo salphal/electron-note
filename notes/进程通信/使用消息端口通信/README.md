@@ -4,11 +4,14 @@
 
 ```
 
-渲染进程 之间通信, 需要借助 主进程
 
-    - 利用主进程代理
-    
-    - 利用主进程开放某一端口同时给渲染进程
+主进程不存在 MessageChannel API
+
+    - MessageChannelMain
+
+
+渲染进程天生支持 MessageChannel
+
 
 
 ```

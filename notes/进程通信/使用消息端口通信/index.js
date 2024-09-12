@@ -1,18 +1,31 @@
-const { MessageChannelMain } = require('electron');
+const { MessageChannelMain, ipcMain } = require('electron');
 const { App } = require('../../../utils/app');
 
 const app = new App();
 
-const win2 = app.addWindow({ htmlPath: './index2.html' });
 const win1 = app.addWindow({ htmlPath: './index1.html' });
+const win2 = app.addWindow({ htmlPath: './index2.html' });
 
-// 建立通道
-const { port1, port2 } = new MessageChannelMain();
-
-win1.once('ready-to-show', () => {
-  win1.webContents.postMessage('port', null, [port1]);
+/**
+ * 在渲染进程中 创建 MessageChannel 并通信
+ */
+ipcMain.on('port-from-renderer', (event) => {
+  const port = event.ports[0];
+  port.on('message', (event) => {
+    port.postMessage('reply');
+  });
+  port.start();
 });
 
-win2.once('ready-to-show', () => {
-  win2.webContents.postMessage('port', null, [port2]);
+/**
+ * 在主进程中创建 MessageChannelMain 并通信
+ */
+ipcMain.on('port-from-main', (event) => {
+  const { port1, port2 } = new MessageChannelMain();
+  event.sender.postMessage('port-from-main', null, [port2]);
+  port1.on('message', (event) => {
+    port1.postMessage('reply');
+  });
+
+  port1.start();
 });
