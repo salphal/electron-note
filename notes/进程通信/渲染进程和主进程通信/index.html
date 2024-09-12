@@ -4,12 +4,30 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>渲染进程和主进程通信</title>
+  <link rel="stylesheet" href="../../../styles/index.css"/>
 </head>
 <body>
 
-<p>渲染进程和主进程通信</p>
-
-<button id="btn">say hello</button>
+<div class="layout">
+  <div class="header">
+    <p>渲染进程和主进程通信</p>
+  </div>
+  <div class="content">
+    <div class="from">
+      <label class="from-item">
+        <span class="label">message</span>
+        <input class="input value" type="text" placeholder="Please enter message to renderer"/>
+      </label>
+      <label class="from-item">
+        <span class="label">reply</span>
+        <textarea class="message value textarea" placeholder="From window_02 renderer" readonly></textarea>
+      </label>
+    </div>
+  </div>
+  <div class="footer">
+    <button class="send">Send</button>
+  </div>
+</div>
 
 
 <script type="application/javascript">
@@ -19,14 +37,18 @@
 
   console.log('=>(main.js:4) window', window);
 
-  const btn = document.getElementById('btn');
+  const sendDom = document.querySelector('.send');
+  const inputDom = document.querySelector('.input');
+  const messageDom = document.querySelector('.message');
 
-  btn.addEventListener('click', () => {
-    ipcRenderer.send(mainChannel, 'hello');
+  sendDom.addEventListener('click', () => {
+    console.log("=>(index.html:46) inputDom.value", inputDom.value);
+    ipcRenderer.send(mainChannel, inputDom.value);
   });
 
   ipcRenderer.on(rendererChannel, (event, message) => {
     console.log(`=>(main.js:20) ${rendererChannel}`, message);
+    messageDom.value = message;
   });
 
 </script>

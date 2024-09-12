@@ -3,7 +3,6 @@
     flex-flow: column nowrap;
 }
 
-
 .layout .header {
     display: flex;
     flex-flow: row nowrap;

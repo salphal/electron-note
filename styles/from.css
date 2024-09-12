@@ -16,6 +16,7 @@
 }
 
 .from .from-item .label {
+    padding-left: 4px;
     min-width: 100px;
 }
 

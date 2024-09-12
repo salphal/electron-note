@@ -34,7 +34,7 @@
 <script type="application/javascript">
 
   const {ipcRenderer} = require("electron");
-  const {channel, window1Channel, action, window2Channel} = require("./constant");
+  const {mainChannel, action} = require("./constant");
 
   const btnDom = document.querySelector('.send');
   const inputDom = document.querySelector('.input');
@@ -43,7 +43,7 @@
   btnDom.addEventListener('click', () => {
     const message = inputDom.value;
     console.log('=>(index1.html:26) send message', message);
-    ipcRenderer.send(channel, 'action', message);
+    ipcRenderer.send(mainChannel, action, message);
   });
 
   ipcRenderer.on(action, (event, message) => {
