@@ -34,7 +34,7 @@
 <script type="application/javascript">
 
   const {ipcRenderer} = require("electron");
-  const {registerChannel, emitChannel} = require('../../../utils/channel');
+  const {registerChannel, emitChannel} = require('../../../utils/channel/event-center-channel');
   const {formWindow1Action, formWindow2Action} = require('./constant');
 
   const btnDom = document.querySelector('.send');
