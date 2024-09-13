@@ -70,12 +70,17 @@ class ElectronWindow {
        *
        * parent: browserWindow;
        */
+      parent: null,
 
       /**
        * 窗口置顶
-       *
-       * alwaysOnTop: boolean;
        */
+      alwaysOnTop: false,
+
+      /**
+       * 窗口是否透明
+       */
+      transparent: false,
 
       webPreferences: {
         nodeIntegration: true, // 允许在渲染进程（在窗口）里面使用 node.js
