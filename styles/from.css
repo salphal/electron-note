@@ -20,6 +20,13 @@
     min-width: 100px;
 }
 
+.from .from-item.center {
+    justify-content: center;
+}
+
+.from .from-item.end {
+    justify-content: flex-end;
+}
 
 .from .from-item .label:after {
     content: ":";
@@ -31,7 +38,6 @@
 }
 
 .from .from-item .value.input {
-
     height: 24px;
 }
 

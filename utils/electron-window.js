@@ -1,17 +1,39 @@
-const { BrowserWindow } = require('electron/main');
+const { BrowserWindow, ipcMain } = require('electron');
+
+const showWindowChannel = 'openWindowChannel';
+const hideWindowChannel = 'closeWindowChannel';
 
 class ElectronWindow {
   wins = [];
+  winMap = new Map();
+
+  initWindowChannel() {
+    this._initShowWindowChannel();
+    this._initHideWindowChannel();
+  }
+
+  _initShowWindowChannel() {
+    ipcMain.on(showWindowChannel, (event, name) => {
+      this.showWindow(name);
+    });
+  }
+
+  _initHideWindowChannel() {
+    ipcMain.on(hideWindowChannel, (event, name) => {
+      this.hideWindow(name);
+    });
+  }
 
   /**
    * 创建窗口
+   * @param name {string} - 窗口唯一名称( 不能重复 )
    * @param options {{
    *  [key: string]: any;
    *  htmlPath: string;
    *  debugger: boolean
    *  }} - index.html 的路径
    */
-  createWindow = (options) => {
+  createWindow = (name, options) => {
     const { htmlPath, ...restOptions } = options;
 
     const win = new BrowserWindow({
@@ -71,10 +93,28 @@ class ElectronWindow {
 
     this.wins.push(win);
 
+    this.winMap.set(name, win);
+
     return win;
   };
+
+  showWindow(name) {
+    const win = this.getWindow(name);
+    // win.hide();
+  }
+
+  hideWindow(name) {
+    const win = this.getWindow(name);
+    win.hide();
+  }
+
+  getWindow(name) {
+    return this.winMap.get(name);
+  }
 }
 
 module.exports = {
   ElectronWindow,
+  showWindowChannel,
+  hideWindowChannel,
 };
