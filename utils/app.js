@@ -8,28 +8,38 @@ class App extends mixins(ElectronWindow, EventCenterChannel) {
 
   constructor(props = {}) {
     super();
-    this.init();
   }
 
+  /**
+   * @return {Promise<App>}
+   */
   init() {
-    this._ready();
-    this._closed();
+    return new Promise((resolve, reject) => {
+      this._ready().then((res) => resolve(res));
+      this._closed();
+    });
   }
 
   /**
    * 当主进程准备就绪
+   * @return {Promise<App>}
    */
   _ready() {
-    this.app.whenReady().then(() => {
-      this.initWindows();
-      this.initChannel();
-      // 兼容 mac
-      app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0) {
-          this.initWindows();
+    return new Promise((resolve, reject) => {
+      try {
+        this.app.whenReady().then(() => {
           this.initChannel();
-        }
-      });
+          // 兼容 mac
+          app.on('activate', () => {
+            if (BrowserWindow.getAllWindows().length === 0) {
+              this.initChannel();
+            }
+          });
+          resolve(this);
+        });
+      } catch (err) {
+        reject(err);
+      }
     });
   }
 

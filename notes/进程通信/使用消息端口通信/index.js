@@ -3,8 +3,10 @@ const { App } = require('../../../utils/app');
 
 const app = new App();
 
-const win1 = app.addWindow({ htmlPath: './index1.html' });
-const win2 = app.addWindow({ htmlPath: './index2.html' });
+app.init().then(() => {
+  const win1 = app.createWindow({ htmlPath: './index1.html' });
+  const win2 = app.createWindow({ htmlPath: './index2.html' });
+});
 
 /**
  * 在渲染进程中 创建 MessageChannel 并通信

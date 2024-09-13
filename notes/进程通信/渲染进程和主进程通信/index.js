@@ -4,7 +4,9 @@ const { mainChannel, rendererChannel } = require('./constant');
 
 const app = new App();
 
-app.addWindow({ htmlPath: './index.html' });
+app.init().then(() => {
+  const win1 = app.createWindow({ htmlPath: './index.html' });
+});
 
 ipcMain.on(mainChannel, (event, message) => {
   console.log(`=>(main.js:14) ${mainChannel}`, message);

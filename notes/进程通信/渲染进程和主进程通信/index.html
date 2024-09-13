@@ -42,7 +42,6 @@
   const messageDom = document.querySelector('.message');
 
   sendDom.addEventListener('click', () => {
-    console.log("=>(index.html:46) inputDom.value", inputDom.value);
     ipcRenderer.send(mainChannel, inputDom.value);
   });
 
