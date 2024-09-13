@@ -5,7 +5,11 @@ class ElectronWindow {
 
   /**
    * 创建窗口
-   * @param options {{[key: string]: any, htmlPath: string}} - index.html 的路径
+   * @param options {{
+   *  [key: string]: any;
+   *  htmlPath: string;
+   *  debugger: boolean
+   *  }} - index.html 的路径
    */
   createWindow = (options) => {
     const { htmlPath, ...restOptions } = options;
@@ -39,6 +43,18 @@ class ElectronWindow {
        *
        */
 
+      /**
+       * 父子联动: 设置该窗口的父窗口实例
+       *
+       * parent: browserWindow;
+       */
+
+      /**
+       * 窗口置顶
+       *
+       * alwaysOnTop: boolean;
+       */
+
       webPreferences: {
         nodeIntegration: true, // 允许在渲染进程（在窗口）里面使用 node.js
         contextIsolation: false, // 关闭上下文隔离
@@ -47,9 +63,11 @@ class ElectronWindow {
       ...restOptions,
     });
 
-    win.loadFile(htmlPath).then(() => {
-      win.webContents.openDevTools(); // 开启控制台
-    });
+    if (!options.debugger) {
+      win.loadFile(htmlPath).then(() => {
+        win.webContents.openDevTools(); // 开启控制台
+      });
+    }
 
     this.wins.push(win);
 

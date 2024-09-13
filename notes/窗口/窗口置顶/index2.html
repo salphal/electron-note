@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="../../../styles/index.css"/>
+  <title>Window_02</title>
+</head>
+<body>
+
+
+<div class="layout">
+  <div class="header">
+    <p>Window_02</p>
+  </div>
+  <div class="content">
+    <div class="from">
+      <label class="from-item">
+        <span class="label">message</span>
+        <input class="input value" type="text" placeholder="Please enter message to renderer"/>
+      </label>
+      <label class="from-item">
+        <span class="label">reply</span>
+        <textarea class="message value textarea" placeholder="From window_01 renderer" readonly></textarea>
+      </label>
+    </div>
+  </div>
+  <div class="footer">
+    <button class="send">Send</button>
+  </div>
+</div>
+
+
+<script type="application/javascript">
+
+  const {ipcRenderer} = require("electron");
+  const {onChannel, emitChannel} = require('../../../utils/channel/event-center-channel');
+  const {formWindow1Action, formWindow2Action} = require('./constant');
+
+  const btnDom = document.querySelector('.send');
+  const inputDom = document.querySelector('.input');
+  const messageDom = document.querySelector('.message');
+
+  /**
+   * 每个渲染进程是独立的, 需要单独的重复注册所需的 action
+   */
+  ipcRenderer.send(onChannel, formWindow1Action);
+  ipcRenderer.send(onChannel, formWindow2Action);
+
+  btnDom.addEventListener('click', () => {
+    const message = inputDom.value;
+    /**
+     * 发送消息至 formWindow1Action
+     */
+    ipcRenderer.send(emitChannel, formWindow1Action, message);
+  });
+
+  /**
+   * 接收来自 formWindow2Action 的消息
+   */
+  ipcRenderer.on(formWindow2Action, (event, message) => {
+    messageDom.innerHTML = message;
+  });
+
+</script>
+
+</body>
+</html>
