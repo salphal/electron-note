@@ -106,7 +106,6 @@ class ElectronWindow {
 
   showWindow(name) {
     const win = this.winMap.get(name);
-    console.log('=>(electron-window.js:108) win', win);
     if (win instanceof BrowserWindow) win.show();
   }
 
