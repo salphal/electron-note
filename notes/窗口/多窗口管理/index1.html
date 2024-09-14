@@ -39,7 +39,6 @@
   const {showWindowChannel, hideWindowChannel} = require('../../../utils/electron-window');
 
   function showWindow2() {
-    console.log('=>(index1.html:42) showWindow2', showWindowChannel);
     ipcRenderer.send(showWindowChannel, 'win2');
   }
 
