@@ -26,7 +26,7 @@
     </div>
   </div>
   <div class='footer'>
-    <button class='send'>Send</button>
+    <button class='send' onclick="sendMessage()">Send</button>
   </div>
 </div>
 
@@ -39,7 +39,6 @@
   const { formWindow1Action, formWindow2Action } = require('./constant');
 
 
-  const btnDom = document.querySelector('.send');
   const inputDom = document.querySelector('.input');
   const messageDom = document.querySelector('.message');
 
@@ -53,13 +52,14 @@
   ipcRenderer.send(onChannel, formWindow1Action);
   ipcRenderer.send(onChannel, formWindow2Action);
 
-  btnDom.addEventListener('click', () => {
+  function sendMessage() {
     /**
      * 发送消息
      */
     const message = inputDom.value;
     port1.postMessage(message);
-  });
+  }
+
   /**
    * 接收消息
    */

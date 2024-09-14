@@ -29,10 +29,12 @@ class App extends mixins(ElectronWindow, EventCenterChannel) {
       try {
         this.app.whenReady().then(() => {
           this.initChannel();
+          this.initWindowChannel();
           // 兼容 mac
           app.on('activate', () => {
             if (BrowserWindow.getAllWindows().length === 0) {
               this.initChannel();
+              this.initWindowChannel();
             }
           });
           resolve(this);

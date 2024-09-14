@@ -14,6 +14,7 @@ class ElectronWindow {
 
   _initShowWindowChannel() {
     ipcMain.on(showWindowChannel, (event, name) => {
+      console.log('=>(electron-window.js:19) showWindowChannel', name);
       this.showWindow(name);
     });
   }
@@ -33,8 +34,8 @@ class ElectronWindow {
    *  debugger: boolean
    *  }} - index.html 的路径
    */
-  createWindow = (name, options) => {
-    const { htmlPath, ...restOptions } = options;
+  createWindow = (options) => {
+    const { name, htmlPath, ...restOptions } = options;
 
     const win = new BrowserWindow({
       width: 1000,
@@ -104,17 +105,14 @@ class ElectronWindow {
   };
 
   showWindow(name) {
-    const win = this.getWindow(name);
-    // win.hide();
+    const win = this.winMap.get(name);
+    console.log('=>(electron-window.js:108) win', win);
+    if (win instanceof BrowserWindow) win.show();
   }
 
   hideWindow(name) {
-    const win = this.getWindow(name);
-    win.hide();
-  }
-
-  getWindow(name) {
-    return this.winMap.get(name);
+    const win = this.winMap.get(name);
+    if (win instanceof BrowserWindow) win.hide();
   }
 }
 
