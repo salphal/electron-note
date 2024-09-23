@@ -1,4 +1,4 @@
-const { BrowserWindow, ipcMain } = require('electron');
+const { BrowserWindow, ipcMain, Notification } = require('electron');
 
 const showWindowChannel = 'openWindowChannel';
 const hideWindowChannel = 'closeWindowChannel';
@@ -15,6 +15,7 @@ class ElectronWindow {
   _initShowWindowChannel() {
     ipcMain.on(showWindowChannel, (event, name) => {
       console.log('=>(electron-window.js:19) showWindowChannel', name);
+      new Notification({ title: name, body: `switch ${name} page` }).show();
       this.showWindow(name);
     });
   }
@@ -112,6 +113,18 @@ class ElectronWindow {
   hideWindow(name) {
     const win = this.winMap.get(name);
     if (win instanceof BrowserWindow) win.hide();
+  }
+
+  hasWindowShow() {
+    return this.wins.every((v) => v.isVisible());
+  }
+
+  showAllWindows() {
+    this.wins.forEach((win) => win.show());
+  }
+
+  hideAllWindows() {
+    this.wins.forEach((win) => win.hide());
   }
 }
 

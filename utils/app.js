@@ -1,10 +1,20 @@
-const { app, BrowserWindow } = require('electron/main');
+const { app, BrowserWindow, globalShortcut } = require('electron/main');
 const { mixins } = require('./mixins');
+const { AppTray } = require('./app-tray');
+const { Clipboard } = require('./clipboard');
 const { ElectronWindow } = require('./electron-window');
 const { EventCenterChannel } = require('./channel/event-center-channel');
+const { GlobalShortcutChannel } = require('./channel/global-shortcut-channel');
 
-class App extends mixins(ElectronWindow, EventCenterChannel) {
+class App extends mixins(
+  AppTray,
+  ElectronWindow,
+  EventCenterChannel,
+  GlobalShortcutChannel,
+  Clipboard,
+) {
   app = app;
+  tray;
 
   constructor(props = {}) {
     super();
@@ -29,7 +39,14 @@ class App extends mixins(ElectronWindow, EventCenterChannel) {
       try {
         this.app.whenReady().then(() => {
           this.initChannel();
+
           this.initWindowChannel();
+
+          this.tray = this.initAppTray(this.winMap);
+          this.initTrayMenu();
+
+          this.initGlobalShortcutChannel();
+
           // 兼容 mac
           app.on('activate', () => {
             if (BrowserWindow.getAllWindows().length === 0) {
@@ -50,11 +67,30 @@ class App extends mixins(ElectronWindow, EventCenterChannel) {
    */
   _closed() {
     app.on('window-all-closed', () => {
+      this.unregisterAllShortcut();
       if (process.platform !== 'darwin') {
         app.quit();
       }
     });
   }
+
+  // initTrayMenu() {
+  //   const contextMenu = Menu.buildFromTemplate([
+  //     {
+  //       label: '显示/隐藏',
+  //       click: () => {
+  //         this.hasWindowShow() ? this.hideAllWindows() : this.showAllWindows();
+  //       },
+  //     },
+  //     {
+  //       label: '退出',
+  //       click: () => {
+  //         this.app.quit();
+  //       },
+  //     },
+  //   ]);
+  //   this.tray.setContextMenu(contextMenu);
+  // }
 }
 
 module.exports = {
