@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="../../../styles/index.css"/>
+  <title>Window_02</title>
+  </head>
+<body>
+
+
+<div class="layout">
+  <div class="header">
+    <p>Window_03</p>
+  </div>
+  <div class="content">
+    <div class="from">
+      <label class="from-item">
+      </label>
+      <label class="from-item">
+      </label>
+    </div>
+  </div>
+  <div class="footer">
+  </div>
+</div>
+
+
+<script type="application/javascript">
+
+  const {ipcRenderer} = require('electron');
+  const {onChannel, emitChannel} = require('../../../utils/channel/event-center-channel');
+  const {formWindow1Action, formWindow2Action} = require('./constant');
+  const {showWindowChannel, hideWindowChannel} = require('../../../utils/electron-window');
+
+  window.onkeydown = function (e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === '1') {
+      ipcRenderer.send(showWindowChannel, 'win1');
+    } else if ((e.ctrlKey || e.metaKey) && e.key === '2') {
+      ipcRenderer.send(showWindowChannel, 'win2');
+    } else if ((e.ctrlKey || e.metaKey) && e.key === '3') {
+      ipcRenderer.send(showWindowChannel, 'win3');
+    }
+  };
+
+</script>
+
+</body>
+</html>
