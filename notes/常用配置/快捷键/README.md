@@ -42,7 +42,7 @@ console.log(globalShortcut.isRegistered("ctrl+e")); // 判断全局快捷键是�
  * 应用退出时, 需要移除注册的快捷键
  */
 globalShortcut.unregister('ctrl+e');
-globalShortcut.unregisterAll()
+globalShortcut.unregisterAll();
 
 
 ```
