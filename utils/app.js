@@ -1,7 +1,8 @@
 const { app, BrowserWindow, globalShortcut } = require('electron/main');
 const { mixins } = require('./mixins');
 const { AppTray } = require('./app-tray');
-const { Clipboard } = require('./clipboard');
+const { AppClipboard } = require('./app-clipboard');
+const { AppNotification } = require('./app-notification');
 const { ElectronWindow } = require('./electron-window');
 const { EventCenterChannel } = require('./channel/event-center-channel');
 const { GlobalShortcutChannel } = require('./channel/global-shortcut-channel');
@@ -11,7 +12,8 @@ class App extends mixins(
   ElectronWindow,
   EventCenterChannel,
   GlobalShortcutChannel,
-  Clipboard,
+  AppClipboard,
+  AppNotification,
 ) {
   app = app;
   tray;
@@ -40,12 +42,14 @@ class App extends mixins(
         this.app.whenReady().then(() => {
           this.initChannel();
 
-          this.initWindowChannel();
+          this.initGlobalShortcutChannel();
+          this.initClipboardChannel();
+          this.initAppNotification();
 
           this.tray = this.initAppTray(this.winMap);
           this.initTrayMenu();
 
-          this.initGlobalShortcutChannel();
+          this.initWindowChannel();
 
           // 兼容 mac
           app.on('activate', () => {
@@ -73,24 +77,6 @@ class App extends mixins(
       }
     });
   }
-
-  // initTrayMenu() {
-  //   const contextMenu = Menu.buildFromTemplate([
-  //     {
-  //       label: '显示/隐藏',
-  //       click: () => {
-  //         this.hasWindowShow() ? this.hideAllWindows() : this.showAllWindows();
-  //       },
-  //     },
-  //     {
-  //       label: '退出',
-  //       click: () => {
-  //         this.app.quit();
-  //       },
-  //     },
-  //   ]);
-  //   this.tray.setContextMenu(contextMenu);
-  // }
 }
 
 module.exports = {

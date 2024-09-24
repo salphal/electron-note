@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'/>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+  <link rel='stylesheet' href='../../../styles/index.css'/>
+  <title>Window_01</title>
+</head>
+<body>
+
+
+<div class='layout'>
+  <div class='header'>
+    <p>Window_01</p>
+  </div>
+  <div class='content'>
+    <div class='from'>
+      <label class='from-item'>
+        <span class='label'>message</span>
+        <input class='input value' type='text' placeholder='write content to clipboard'/>
+      </label>
+      <label class='from-item'>
+        <span class='label'>reply</span>
+        <textarea class='message value textarea' placeholder='get content in clipboard' readonly></textarea>
+      </label>
+    </div>
+  </div>
+  <div class='footer'>
+    <button onclick="writeClipboard()">write clipboard</button>
+    <button onclick="readClipboard()">read clipboard</button>
+  </div>
+</div>
+
+
+<script type='application/javascript'>
+
+
+  const {ipcRenderer} = require('electron');
+  const {onChannel, emitChannel} = require('../../../utils/channel/event-center-channel');
+  const {writeClipboardChannel, readClipboardChannel} = require('../../../utils/app-clipboard')
+  const {formWindow1Action, formWindow2Action} = require('./constant');
+
+  const inputDom = document.querySelector('.input')
+  const messageDom = document.querySelector('.message')
+
+  function writeClipboard() {
+    ipcRenderer.send(writeClipboardChannel, inputDom.value);
+  }
+
+  function readClipboard() {
+    ipcRenderer.send(readClipboardChannel);
+  }
+
+  ipcRenderer.on(readClipboardChannel, (event, content) => {
+    messageDom.value = content;
+  });
+
+
+
+</script>
+
+</body>
+</html>

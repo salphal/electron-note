@@ -8,9 +8,10 @@ const readClipboardChannel = 'readClipboardChannel';
  * https://www.electronjs.org/zh/docs/latest/api/clipboard
  */
 
-class Clipboard {
+class AppClipboard {
   initClipboardChannel() {
     this.initWriteClipboardChannel();
+    this.initReadClipboardChannel();
   }
 
   initWriteClipboardChannel() {
@@ -22,11 +23,14 @@ class Clipboard {
   }
 
   initReadClipboardChannel() {
-    ipcMain.on(readClipboardChannel, (event) => {});
+    ipcMain.on(readClipboardChannel, (event) => {
+      const content = this.readClipboard();
+      event.reply(readClipboardChannel, content);
+    });
   }
 
   writeClipboard(content) {
-    clipboard.write(content);
+    clipboard.writeText(content);
   }
 
   readClipboard() {
@@ -35,5 +39,7 @@ class Clipboard {
 }
 
 module.exports = {
-  Clipboard,
+  AppClipboard,
+  writeClipboardChannel,
+  readClipboardChannel,
 };
