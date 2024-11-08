@@ -18,7 +18,26 @@ class AppNotification {
   }
 
   notification({ title, body }) {
-    new Notification({ title, body }).show();
+    const isAllowed = Notification.isSupported();
+    /**
+     * 注意电脑是否是勿扰模式
+     * 注意电脑是否是勿扰模式
+     * 注意电脑是否是勿扰模式
+     */
+    if (isAllowed) {
+      console.log('=>(app-notification.js:23) 是否支持 Notification:', isAllowed);
+      const notification = new Notification({ title, body });
+      notification.on('click', () => {
+        console.log('=>(app-notification.js:28) notification click');
+      });
+      notification.on('show', () => {
+        console.log('=>(app-notification.js:28) notification show');
+      });
+      notification.on('close', () => {
+        console.log('=>(app-notification.js:28) notification close');
+      });
+      notification.show();
+    }
   }
 }
 

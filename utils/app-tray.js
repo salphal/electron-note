@@ -1,6 +1,10 @@
 const { Tray, Menu } = require('electron');
 const path = require('node:path');
 
+/**
+ * https://www.electronjs.org/zh/docs/latest/tutorial/tray
+ */
+
 class AppTray {
   initAppTray(winMap) {
     const iconPath = path.join(__dirname, 'tray.jpg');
