@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'/>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+    <link rel='stylesheet' href='../../../styles/index.css'/>
+    <title>Window_01</title>
+</head>
+<body>
+
+
+<div class='layout'>
+    <div class='header'>
+        <p>用于选择文件等</p>
+    </div>
+    <div class='content'>
+        <!--<div class='from'>-->
+        <!--    <label class='from-item'>-->
+        <!--        <span class='label'>title</span>-->
+        <!--        <input class='title value' type='text' placeholder='notification title'/>-->
+        <!--    </label>-->
+        <!--    <label class='from-item'>-->
+        <!--        <span class='label'>body</span>-->
+        <!--        <textarea class='body value textarea' placeholder='notification body'></textarea>-->
+        <!--    </label>-->
+        <!--</div>-->
+    </div>
+    <div class='footer'>
+        <button onclick="dialog()">system dialog</button>
+    </div>
+</div>
+
+
+<script type='application/javascript'>
+
+    const {ipcRenderer} = require('electron');
+    const {onChannel, emitChannel} = require('../../../utils/channel/event-center-channel');
+    const {dialogChannel} = require('../../../utils/app-dialog')
+    const {formWindow1Action, formWindow2Action} = require('./constant');
+
+    const titleDom = document.querySelector('.title')
+    const bodyDom = document.querySelector('.body')
+
+    function dialog() {
+        // const title = titleDom.value;
+        // const body = bodyDom.value;
+        ipcRenderer.send(dialogChannel, {});
+    }
+
+</script>
+
+</body>
+</html>

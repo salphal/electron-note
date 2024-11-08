@@ -4,6 +4,7 @@ const { AppTray } = require('./app-tray');
 const { AppClipboard } = require('./app-clipboard');
 const { AppNotification } = require('./app-notification');
 const { AppDialog } = require('./app-dialog');
+const { AppMenu } = require('./app-menu');
 const { ElectronWindow } = require('./electron-window');
 const { EventCenterChannel } = require('./channel/event-center-channel');
 const { GlobalShortcutChannel } = require('./channel/global-shortcut-channel');
@@ -16,6 +17,7 @@ class App extends mixins(
   AppClipboard, // 全局剪切板
   AppNotification, // 全局通知
   AppDialog, // 全局对话框
+  AppMenu, // 应用全局菜单
 ) {
   app = app;
 
@@ -56,6 +58,8 @@ class App extends mixins(
           this.initTrayMenu();
 
           this.initWindowChannel();
+
+          this.initAppMenu();
 
           // 兼容 mac
           app.on('activate', () => {
