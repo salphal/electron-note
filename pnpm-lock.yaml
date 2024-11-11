@@ -58,6 +58,8 @@ importers:
 
   notes/进程通信/渲染进程和主进程通信: {}
 
+  notes/预加载脚本: {}
+
 packages:
 
   '@electron/get@2.0.3':

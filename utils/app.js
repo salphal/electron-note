@@ -23,18 +23,18 @@ class App extends mixins(
   AppMenu, // 应用全局菜单
   AppProgressbar, // 应用进度条
   AppFile, // 数据文件控制
-  AppStore, // 全局数据仓库
+  // AppStore, // 全局数据仓库
 ) {
   app = app;
 
   constructor(props = {}) {
     super();
     console.log('=>(app.js:29) userData', this.app.getAppPath('userData'));
-    console.log('=>(app.js:29) home', this.app.getAppPath('home'));
-    console.log('=>(app.js:29) desktop', this.app.getAppPath('desktop'));
-    console.log('=>(app.js:29) document', this.app.getAppPath('document'));
-    console.log('=>(app.js:29) downloads', this.app.getAppPath('downloads'));
-    console.log('=>(app.js:29) music', this.app.getAppPath('music'));
+    // console.log('=>(app.js:29) home', this.app.getAppPath('home'));
+    // console.log('=>(app.js:29) desktop', this.app.getAppPath('desktop'));
+    // console.log('=>(app.js:29) document', this.app.getAppPath('document'));
+    // console.log('=>(app.js:29) downloads', this.app.getAppPath('downloads'));
+    // console.log('=>(app.js:29) music', this.app.getAppPath('music'));
   }
 
   /**
@@ -62,7 +62,7 @@ class App extends mixins(
           this.tray = this.initAppTray(this.winMap);
           this.initTrayMenu();
 
-          this.initAppStore();
+          // this.initAppStore();
 
           this.initChannel();
           this.initAppNotification();

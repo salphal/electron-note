@@ -1,12 +1,10 @@
 const { BrowserWindow, ipcMain, Notification } = require('electron');
 
-
 /**
  * electron 中多个窗口共享同一个 localstorage
  *
  * 也可以配置为
  */
-
 
 const showWindowChannel = 'openWindowChannel';
 const hideWindowChannel = 'closeWindowChannel';
@@ -93,7 +91,7 @@ class ElectronWindow {
       transparent: false,
 
       webPreferences: {
-        nodeIntegration: true, // 允许在渲染进程（在窗口）里面使用 node.js
+        nodeIntegration: true, // 允许在渲染进程( 在窗口 )里面使用 node.js
         contextIsolation: false, // 关闭上下文隔离
         webviewTag: true, // 允许使用 <webview> 标签
       },

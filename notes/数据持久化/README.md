@@ -30,8 +30,28 @@
 
 ```js
 
+let db = new Dexie('demo');
 
+// 创建表的时候必须有 id, 其他字段可以在写入数据的时候临时决定
+db.version(1)
+  .stores({
+    users: 'id',
+  });
 
+// 增加数据
+await db.users.add({ id: 0, name: 'alphal' });
+
+// 查询数据
+await db.users.filter(users => users.name === 'alphal');
+
+// 修改数据
+await db.users.put({ id: 0, name: 'beta' });
+
+// 删除数据
+await db.users.delete(0);
+
+// 数据排序
+await db.users.orderBy('id');
 
 
 ```
