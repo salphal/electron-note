@@ -1,52 +1,86 @@
 <!doctype html>
 <html lang='en'>
 <head>
-    <meta charset='UTF-8'/>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
-    <link rel='stylesheet' href='../../../styles/index.css'/>
-    <title>Window_01</title>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <link rel='stylesheet' href='../../../styles/index.css' />
+  <title>Window_01</title>
+  <style>
+
+
+  </style>
 </head>
 <body>
 
 
 <div class='layout'>
-    <div class='header'>
-        <p>右键菜单</p>
+  <div class='header'>
+    <p>应用图表进度条示例</p>
+  </div>
+  <div class='content'>
+    <div class='from'>
+      <label class='from-item center'>
+        <button onclick='setValue1()'>-1</button>
+      </label>
+      <label class='from-item center'>
+        <button onclick='setValue2()'>2</button>
+      </label>
+      <label class='from-item center'>
+        <button onclick='setValue3()'>0%</button>
+        <button onclick='setValue4()'>100%</button>
+      </label>
     </div>
-    <div class='content'>
-        <!--        <div class='from'>-->
-        <!--            <label class='from-item'>-->
-        <!--                <span class='label'>title</span>-->
-        <!--                <input class='title value' type='text' placeholder='notification title'/>-->
-        <!--            </label>-->
-        <!--            <label class='from-item'>-->
-        <!--                <span class='label'>body</span>-->
-        <!--                <textarea class='body value textarea' placeholder='notification body'></textarea>-->
-        <!--            </label>-->
-        <!--        </div>-->
-    </div>
-    <div class='footer'>
-        <button onclick="dialog()">system dialog</button>
-    </div>
+  </div>
+  <div class='footer'>
+    <button onclick='dialog()'>system dialog</button>
+  </div>
 </div>
 
 
 <script type='application/javascript'>
 
 
-    const {ipcRenderer} = require('electron');
-    const {onChannel, emitChannel} = require('../../../utils/channel/event-center-channel');
-    const {dialogChannel} = require('../../../utils/app-dialog')
-    const {formWindow1Action, formWindow2Action} = require('./constant');
+  const { ipcRenderer } = require('electron');
+  const { progressbarChannel } = require('../../../utils/app-progressbar');
 
-    const titleDom = document.querySelector('.title')
-    const bodyDom = document.querySelector('.body')
+  const titleDom = document.querySelector('.title');
+  const bodyDom = document.querySelector('.body');
 
-    function dialog() {
-        // const title = titleDom.value;
-        // const body = bodyDom.value;
-        ipcRenderer.send(dialogChannel, {});
-    }
+  /**
+   * -1
+   */
+  function setValue1() {
+  }
+
+  /**
+   * {1,}
+   */
+  function setValue2() {
+  }
+
+  /**
+   * 0%
+   */
+  function setValue3() {
+  }
+
+  /**
+   * 100%
+   */
+  function setValue4() {
+    const INCREMENT = 0.03;
+    let c = 0;
+    const progressInterval = setInterval(() => {
+      ipcRenderer.send(progressbarChannel, c);
+      console.log("=>(index1.html:75) c", c);
+      if (c < 2) {
+        c += INCREMENT;
+      } else {
+        c = (-INCREMENT * 5);
+      }
+    }, 100);
+  }
+
 
 </script>
 

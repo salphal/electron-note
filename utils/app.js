@@ -8,6 +8,7 @@ const { AppMenu } = require('./app-menu');
 const { ElectronWindow } = require('./electron-window');
 const { EventCenterChannel } = require('./channel/event-center-channel');
 const { GlobalShortcutChannel } = require('./channel/global-shortcut-channel');
+const { AppProgressbar } = require('./app-progressbar');
 
 class App extends mixins(
   AppTray, // 托盘图标及菜单
@@ -18,6 +19,7 @@ class App extends mixins(
   AppNotification, // 全局通知
   AppDialog, // 全局对话框
   AppMenu, // 应用全局菜单
+  AppProgressbar, // 应用进度条
 ) {
   app = app;
 
@@ -60,9 +62,10 @@ class App extends mixins(
           this.initWindowChannel();
 
           this.initAppMenu();
+          this.initAppProgressBar();
 
           // 兼容 mac
-          app.on('activate', () => {
+          this.app.on('activate', () => {
             if (BrowserWindow.getAllWindows().length === 0) {
               this.initChannel();
               this.initWindowChannel();

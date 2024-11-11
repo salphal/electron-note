@@ -1,6 +1,8 @@
 .layout {
+    overflow: hidden;
     display: flex;
     flex-flow: column nowrap;
+    height: 100%;
 }
 
 .layout .header {
@@ -12,6 +14,7 @@
 }
 
 .layout .content {
+    flex: 1;
     padding: 20px 0;
     display: flex;
     flex-flow: column nowrap;
@@ -20,6 +23,7 @@
 
 .layout .footer {
     display: flex;
+    padding: 24px 0;
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;

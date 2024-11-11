@@ -32,17 +32,17 @@ class AppMenu {
       ...(isMac
         ? [
             {
-              label: "测试",
+              label: '测试',
               submenu: [
-                { role: 'about' },
-                { type: 'separator' },
-                { role: 'services' },
-                { type: 'separator' },
-                { role: 'hide' },
-                { role: 'hideOthers' },
-                { role: 'unhide' },
-                { type: 'separator' },
-                { role: 'quit' },
+                { label: 'about', role: 'about' },
+                { label: 'separator', type: 'separator' },
+                { label: 'services', role: 'services' },
+                { label: 'separator', type: 'separator' },
+                { label: 'hide', role: 'hide' },
+                { label: 'hideOthers', role: 'hideOthers' },
+                { label: 'unhide', role: 'unhide' },
+                { label: 'separator', type: 'separator' },
+                { label: 'quit', role: 'quit' },
               ],
             },
           ]

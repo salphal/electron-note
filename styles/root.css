@@ -2,3 +2,14 @@
     font-family: SimHei, Hiragino Sans GB, sans-serif;
     font-size: 14px;
 }
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+:root,
+html,
+body {
+    height: 100%;
+}
