@@ -9,6 +9,8 @@ const { ElectronWindow } = require('./electron-window');
 const { EventCenterChannel } = require('./channel/event-center-channel');
 const { GlobalShortcutChannel } = require('./channel/global-shortcut-channel');
 const { AppProgressbar } = require('./app-progressbar');
+const { AppFile } = require('./app-file');
+const { AppStore } = require('./app-store');
 
 class App extends mixins(
   AppTray, // 托盘图标及菜单
@@ -20,11 +22,19 @@ class App extends mixins(
   AppDialog, // 全局对话框
   AppMenu, // 应用全局菜单
   AppProgressbar, // 应用进度条
+  AppFile, // 数据文件控制
+  AppStore, // 全局数据仓库
 ) {
   app = app;
 
   constructor(props = {}) {
     super();
+    console.log('=>(app.js:29) userData', this.app.getAppPath('userData'));
+    console.log('=>(app.js:29) home', this.app.getAppPath('home'));
+    console.log('=>(app.js:29) desktop', this.app.getAppPath('desktop'));
+    console.log('=>(app.js:29) document', this.app.getAppPath('document'));
+    console.log('=>(app.js:29) downloads', this.app.getAppPath('downloads'));
+    console.log('=>(app.js:29) music', this.app.getAppPath('music'));
   }
 
   /**
@@ -49,20 +59,24 @@ class App extends mixins(
          * 应用注册后，才能去挂载方法或注册事件等
          */
         this.app.whenReady().then(() => {
+          this.tray = this.initAppTray(this.winMap);
+          this.initTrayMenu();
+
+          this.initAppStore();
+
           this.initChannel();
           this.initAppNotification();
+
           this.initAppDialog();
 
           this.initGlobalShortcutChannel();
           this.initClipboardChannel();
 
-          this.tray = this.initAppTray(this.winMap);
-          this.initTrayMenu();
-
           this.initWindowChannel();
 
           this.initAppMenu();
           this.initAppProgressBar();
+          this.initAppFile(this.app);
 
           // 兼容 mac
           this.app.on('activate', () => {

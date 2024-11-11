@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'/>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+    <link rel='stylesheet' href='../../../styles/index.css'/>
+    <title>Window_01</title>
+</head>
+<body>
+
+
+<div class='layout'>
+    <div class='header'>
+        <p>Window_01</p>
+    </div>
+    <div class='content'>
+        <div class='from'>
+            <!--<label class='from-item'>-->
+            <!--    <span class='label'>title</span>-->
+            <!--    <input class='title value' type='text' placeholder='notification title'/>-->
+            <!--</label>-->
+            <label class='from-item'>
+                <span class='label'>body</span>
+                <textarea class='body value textarea' placeholder='file content'></textarea>
+            </label>
+        </div>
+    </div>
+    <div class='footer'>
+        <button onclick="saveFile()">写入内容到桌面文件</button>
+        <button onclick="checkSaveFilePath()">自定义写入文件路径</button>
+        <button onclick="reset()">重置</button>
+    </div>
+</div>
+
+
+<script type='application/javascript'>
+
+    const {ipcRenderer} = require('electron');
+    const {onChannel, emitChannel} = require('../../../utils/channel/event-center-channel');
+    const {appFileChannel} = require('../../../utils/app-file')
+    const {dialogChannel} = require('../../../utils/app-dialog')
+    const {formWindow1Action, formWindow2Action} = require('./constant');
+
+    const titleDom = document.querySelector('.title');
+    const bodyDom = document.querySelector('.body');
+
+    let filePath = '';
+
+    const reset = () => {
+        filePath = '';
+    };
+
+    const saveFile = () => {
+        // const title = titleDom.value;
+        const body = bodyDom.value;
+        console.log("=>(index1.html:55) body", body);
+        if (filePath) {
+            ipcRenderer.send(appFileChannel, {
+                // pathName: 'desktop',
+                filePath,
+                filename: 'demo.txt',
+                content: body,
+            });
+        } else {
+            ipcRenderer.send(appFileChannel, {
+                pathName: 'desktop',
+                filename: 'demo.txt',
+                content: body,
+            });
+        }
+    };
+
+    const checkSaveFilePath = async () => {
+        const res = await ipcRenderer.invoke(dialogChannel, {
+            properties: ['openDirectory']
+        });
+        console.log("=>(index1.html:65) res", res);
+        if (res && Array.isArray(res.filePaths) && res.filePaths.length) {
+            const body = bodyDom.value;
+            filePath = res.filePaths[0];
+        }
+    };
+
+</script>
+
+</body>
+</html>

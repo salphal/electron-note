@@ -1,5 +1,13 @@
 const { BrowserWindow, ipcMain, Notification } = require('electron');
 
+
+/**
+ * electron 中多个窗口共享同一个 localstorage
+ *
+ * 也可以配置为
+ */
+
+
 const showWindowChannel = 'openWindowChannel';
 const hideWindowChannel = 'closeWindowChannel';
 

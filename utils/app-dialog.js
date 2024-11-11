@@ -13,20 +13,25 @@ class AppDialog {
   }
 
   initDialog() {
-    ipcMain.on(dialogChannel, (event, dialog) => {
-      this.dialog(dialog);
+    ipcMain.handle(dialogChannel, async (event, config) => {
+      return await this.dialog(config);
     });
   }
 
-  dialog({ title }) {
+  async dialog(config) {
     /**
      * https://www.electronjs.org/zh/docs/latest/api/dialog#dialogshowopendialogwindow-options
      * @param {string} [title=""] - 标题
      * @param {string} [defaultPath=""] - 标题
      * @param {string} [buttonLabel="确认"] - 按钮的自定义标签
      * @param {Array<string>} [properties={}] - 包含对话框相关属性
-     */
-    dialog.showOpenDialog({});
+       */
+    const res = await dialog.showOpenDialog(config);
+
+    const first = res.filePaths[0];
+    console.log('=>(app-dialog.js:31) first', first);
+
+    return res;
   }
 }
 

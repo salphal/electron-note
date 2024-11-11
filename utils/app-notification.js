@@ -12,8 +12,8 @@ class AppNotification {
   }
 
   initNotificationChannel() {
-    ipcMain.on(notificationChannel, (event, notification) => {
-      this.notification(notification);
+    ipcMain.on(notificationChannel, (event, config) => {
+      this.notification(config);
     });
   }
 
