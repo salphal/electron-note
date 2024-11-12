@@ -1,61 +1,55 @@
 <!doctype html>
 <html lang='en'>
 <head>
-  <meta charset='UTF-8' />
-  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-  <link rel='stylesheet' href='../../styles/index.css' />
-  <title>Window_01</title>
+    <meta charset='UTF-8'/>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+    <link rel='stylesheet' href='../../styles/index.css'/>
+    <title>Window_01</title>
 </head>
 <body>
 
 
 <div class='layout'>
-  <div class='header'>
-    <p>Window_01</p>
-  </div>
-  <div class='content'>
-    预加载脚本 preload.js
-    <div class='from'>
-      <!--<label class='from-item center'>-->
-      <!--  <button onclick="showWindow2()">show window_02</button>-->
-      <!--  <button onclick="hideWindow2()">hide window_02</button>-->
-      <!--</label>-->
-      <!--<label class='from-item center'>-->
-      <!--  <button onclick="showWindow3()">show window_03</button>-->
-      <!--  <button onclick="hideWindow3()">hide window_03</button>-->
-      <!--</label>-->
+    <div class='header'>
+        <p>Window_01</p>
     </div>
-  </div>
-  <div class='footer'>
-    <button class='send'>Send</button>
-  </div>
+    <div class='content'>
+        预加载脚本 preload.js
+        <div class='from'>
+            <!--<label class='from-item center'>-->
+            <!--  <button onclick="showWindow2()">show window_02</button>-->
+            <!--  <button onclick="hideWindow2()">hide window_02</button>-->
+            <!--</label>-->
+            <!--<label class='from-item center'>-->
+            <!--  <button onclick="showWindow3()">show window_03</button>-->
+            <!--  <button onclick="hideWindow3()">hide window_03</button>-->
+            <!--</label>-->
+        </div>
+    </div>
+    <div class='footer'>
+        <button class='send'>Send</button>
+    </div>
 </div>
 
 
 <script type='application/javascript'>
 
-  const { ipcRenderer } = require('electron');
-  const { onChannel, emitChannel } = require('../../utils/channel/event-center-channel');
-  const { formWindow1Action, formWindow2Action } = require('./constant');
-  const { showWindowChannel, hideWindowChannel } = require('../../utils/electron-window');
+    /**
+     * 开启了 上下文隔离, nodejs 不能使用
+     */
+    // const {ipcRenderer} = require('electron');
+    // const {onChannel, emitChannel} = require('../../utils/channel/event-center-channel');
+    // const {formWindow1Action, formWindow2Action} = require('./constant');
+    // const {showWindowChannel, hideWindowChannel} = require('../../utils/electron-window');
 
-  console.log(window.myApi);
+    /**
+     * 在预加载脚本中添加的
+     *
+     * 如果开启了上下文隔离, 则 nodejs 和 与主进程通信 将会被关闭
+     */
+    console.log(window.myApi);
 
-  function showWindow2() {
-    ipcRenderer.send(showWindowChannel, 'win2');
-  }
 
-  function hideWindow2() {
-    ipcRenderer.send(hideWindowChannel, 'win2');
-  }
-
-  function showWindow3() {
-    ipcRenderer.send(showWindowChannel, 'win3');
-  }
-
-  function hideWindow3() {
-    ipcRenderer.send(hideWindowChannel, 'win3');
-  }
 
 </script>
 
