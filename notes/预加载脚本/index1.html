@@ -14,6 +14,7 @@
     <p>Window_01</p>
   </div>
   <div class='content'>
+    预加载脚本 preload.js
     <div class='from'>
       <!--<label class='from-item center'>-->
       <!--  <button onclick="showWindow2()">show window_02</button>-->
@@ -37,6 +38,8 @@
   const { onChannel, emitChannel } = require('../../utils/channel/event-center-channel');
   const { formWindow1Action, formWindow2Action } = require('./constant');
   const { showWindowChannel, hideWindowChannel } = require('../../utils/electron-window');
+
+  console.log(window.myApi);
 
   function showWindow2() {
     ipcRenderer.send(showWindowChannel, 'win2');

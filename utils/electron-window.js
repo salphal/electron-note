@@ -42,7 +42,8 @@ class ElectronWindow {
    *  }} - index.html 的路径
    */
   createWindow = (options) => {
-    const { name, htmlPath, ...restOptions } = options;
+    console.log('=>(electron-window.js:45) options', options);
+    const { name, htmlPath, preload = '', ...restOptions } = options;
 
     const win = new BrowserWindow({
       width: 1000,
@@ -94,6 +95,7 @@ class ElectronWindow {
         nodeIntegration: true, // 允许在渲染进程( 在窗口 )里面使用 node.js
         contextIsolation: false, // 关闭上下文隔离
         webviewTag: true, // 允许使用 <webview> 标签
+        preload, // 添加预加载脚本
       },
       ...restOptions,
     });
