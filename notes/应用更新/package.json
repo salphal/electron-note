@@ -9,6 +9,12 @@
   },
   "build": {
     "appId": "com.organize.name",
+    "publish": [
+      {
+        "provider": "generic",
+        "url": "http://localhost:3000"
+      }
+    ],
     "mac": {
       "category": "public.app-category.utilities"
     },
